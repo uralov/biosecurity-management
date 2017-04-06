@@ -11,7 +11,7 @@ There is a process where people make observations about potential biosecurity ha
 
 ## What does "probationary purposes" mean?
 
-Our real product is being developed in a private repo in a private GitHub organisation. Our core product team works there.
+Our real product is being developed in a private repo in another GitHub organisation. Our core product team works there.
 
 If you have been assigned a ticket in this repo, then you are a probationary team member. You will have been invited here by someone who is paying you to work on the ticket. This means we have hired you to work on the project for a short period, to evaluate your skills and teamwork. In other words, you are a probationary hire.
 
