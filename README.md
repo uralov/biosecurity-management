@@ -3,9 +3,9 @@ We've got this `biosecurity` project. It contains a `biosecurity-management` com
 
 ## What's it about?
 
-Biosecurity is about preventing bad things from happening (security) due to living things (bio). For examples, invasive species or plant diseases. Our client is particularaly interesting in preventing bad things happinging to Agriculture in a region.
+Biosecurity is about preventing bad things from happening (security) due to living things (bio). For examples, invasive species or plant diseases. Our client is particularaly interesting in preventing bad things happinging to farming (agriculture).
 
-Our `biosecurity-management` product is a web-based tool that biosecurity experts will use to manage information about biosecurity observations, including managing a subscription to notices about things they are interested in (but not other things).
+Our `biosecurity-management` product is a web-based tool that experts will use to manage information about biosecurity observations, including managing a subscription to notices about things they are interested in (but not other things).
 
 There is a process where people make observations about potential biosecurity hazards. For example "here is a photo I took today, of what I think are some yellow crazy ants at some place where they don't belong". This happens outside the biosecurity-management product, but these observations are loaded into the biosecurity product. 
 
