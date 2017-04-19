@@ -1,4 +1,4 @@
-FROM nginx:1.9.14
+FROM ubuntu:xenial
 
 # this is the django project name
 # TODO: make this consistent with entrypoint.sh variable naming...
@@ -6,34 +6,47 @@ ENV PROJECT_NAME biosecurity_management
 
 # These dependencies are baggage we found we need often enough to include
 # them in our base image
-RUN apt-get update && \
-    apt-get install -y python wget libpq-dev python-dev build-essential libxml2-dev libxslt1-dev libjpeg-dev graphviz graphviz-dev pkg-config postgresql-client git libgraphviz-dev libcgraph6 && \
-    apt-get clean 
-
-# bootstrap our python install
-RUN wget https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py && \
-    pip install virtualenv
+RUN apt-get update
+RUN apt-get install -y python3 \
+                       python3-pip \
+                       python3-venv \
+                       wget \
+                       libpq-dev \
+                       python-dev \
+                       build-essential \
+                       libxml2-dev \
+                       libxslt1-dev \
+                       libjpeg-dev \
+                       graphviz \
+                       graphviz-dev \
+                       pkg-config \
+                       postgresql-client \
+                       git \
+                       libgraphviz-dev \
+                       libcgraph6 \
+                       nginx
+RUN apt-get clean
 
 ADD ./ /app
 ADD ./deploy/docker/nginx.conf /etc/nginx/nginx.conf
 
-RUN echo "bumping docker, yech"
+WORKDIR /app/biosecurity_management
+
 # Install virtualenv
-RUN cd /app && \
-    virtualenv .venv && \
-    pip install --upgrade pip && \
-    .venv/bin/pip install -r ./requirements.txt > /tmp/pip-requirements.log
-
-
-# We assume that someone already ran `npm install`, which installs all
-# JS requirements and compile webpack assets.
+RUN python3 -m venv .venv
+RUN .venv/bin/pip install -r ./requirements.txt > /tmp/pip-requirements.log
 
 # Collect up static files
-RUN cd /app && \
-     . ./.venv/bin/activate && \
-    cd $PROJECT_NAME && \
-    python manage.py collectstatic -i babel* -i webpac* -i uglify* -i sha* -i src -i crypto-browserify -i core-js -i docs -i media --noinput > /tmp/collectstatic.log
+RUN DATABASE_URL="sqlite://:memory:" SECRET_KEY="hackme" .venv/bin/python3 manage.py collectstatic -i babel* \
+                                                               -i webpac* \
+                                                               -i uglify* \
+                                                               -i sha* \
+                                                               -i src \
+                                                               -i crypto-browserify \
+                                                               -i core-js \
+                                                               -i docs \
+                                                               -i media \
+                                                               --noinput > /tmp/collectstatic.log
 
 # Include nginx logs in container logs
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
