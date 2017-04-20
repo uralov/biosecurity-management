@@ -5,8 +5,8 @@ services:
     ports:
       - 80:80
       - 8000:8000
-#    volumes:
-#      - .:/home/web
+    volumes:
+      - .:/app
     env_file:
       - development.env
     networks:
