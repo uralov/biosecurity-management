@@ -1,0 +1,15 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - 80:80
+      - 8000:8000
+#    volumes:
+#      - .:/home/web
+    env_file:
+      - development.env
+    networks:
+      - net
+networks:
+  net:
