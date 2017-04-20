@@ -34,7 +34,8 @@ WORKDIR /app/biosecurity_management
 
 # Install virtualenv
 RUN python3 -m venv .venv
-RUN .venv/bin/pip install -r ./requirements.txt > /tmp/pip-requirements.log
+RUN .venv/bin/pip install --upgrade pip && \
+ .venv/bin/pip install -r ./requirements.txt > /tmp/pip-requirements.log
 
 # Collect up static files
 RUN DATABASE_URL="sqlite://:memory:" SECRET_KEY="hackme" .venv/bin/python3 manage.py collectstatic -i babel* \
