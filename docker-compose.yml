@@ -4,9 +4,8 @@ services:
     build: .
     ports:
       - 80:80
-      - 8000:8000
     volumes:
-      - .:/app
+      - ./biosecurity_management:/app/biosecurity_management
     env_file:
       - development.env
     networks:

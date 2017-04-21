@@ -38,7 +38,7 @@ else
 fi
 
 # Activate virtualenv
-#. ./.venv/bin/activate
+. ../.venv/bin/activate
 
 # python manage.py createcachetable
 # echo [TIMING `date +"%F %R:%S"`] Running collectstatic
