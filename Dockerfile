@@ -39,23 +39,27 @@ ADD ./deploy/docker/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /app/biosecurity_management
 
+RUN pip3 install -r ./requirements.txt > /tmp/pip-requirements.log
+
+CMD python3 manage.py runserver 0.0.0.0:8000
+
 # Install virtualenv
-RUN python3 -m venv ../.venv
-RUN ../.venv/bin/pip install --upgrade pip && \
-    ../.venv/bin/pip install -r ./requirements.txt > /tmp/pip-requirements.log
+#RUN python3 -m venv ../.venv
+#RUN ../.venv/bin/pip install --upgrade pip && \
+#    ../.venv/bin/pip install -r ./requirements.txt > /tmp/pip-requirements.log
+#
+## Collect up static files
+#RUN ../.venv/bin/python3 manage.py collectstatic -i babel* \
+#                                              -i webpac* \
+#                                              -i uglify* \
+#                                              -i sha* \
+#                                              -i src \
+#                                              -i crypto-browserify \
+#                                              -i core-js \
+#                                              -i docs \
+#                                              -i media \
+#                                              --noinput > /tmp/collectstatic.log
 
-# Collect up static files
-RUN ../.venv/bin/python3 manage.py collectstatic -i babel* \
-                                              -i webpac* \
-                                              -i uglify* \
-                                              -i sha* \
-                                              -i src \
-                                              -i crypto-browserify \
-                                              -i core-js \
-                                              -i docs \
-                                              -i media \
-                                              --noinput > /tmp/collectstatic.log
+#RUN chmod +x /app/deploy/docker/scripts/entrypoint.sh
 
-RUN chmod +x /app/deploy/docker/scripts/entrypoint.sh
-
-ENTRYPOINT ["/app/deploy/docker/scripts/entrypoint.sh"]
+#ENTRYPOINT ["/app/deploy/docker/scripts/entrypoint.sh"]
